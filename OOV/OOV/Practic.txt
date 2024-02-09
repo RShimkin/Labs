@@ -1,0 +1,97 @@
+8*5+2
+res0*8
+val j=9*74
+"hello, "+res0
+val j=0
+val x, y=100
+val St,Str:String=null
+1.toString
+val a=8
+val b=7
+a+b
+a.+(b)
+1.to(10)
+1 to 10
+val x:BigInt=125489631
+x*x*x
+//работает
+
+import scala.math._
+sqrt(7.0)
+pow(2.0,4)
+"Hello"(4)
+"hello".apply(4)
+//работает
+
+
+if (x>0) 1 else -1
+val s =if (x>0) 1 else -1
+//
+var n=10
+var r=1
+//
+if (n>0) {r=r*n; n=n-1}
+//
+var S0=10
+var v=4
+var V0=2
+var x=5
+var y=5
+val x0=1.0
+val y0=1.0
+val t=2
+//
+var S=S0+(v-V0)*y+0.5*(a+7)*t*t
+val dx=x-x0
+val dy=y-y0
+val dis=sqrt(dx*dx+dy*dy)
+val dis={val dx=x-x0;val dy=y-y0; sqrt(dx*dx+dy*dy)}
+x=1
+y=1
+val (x, y) = (1, 1)
+print("Answer: ")
+print(42)
+//Работает
+
+
+while(n>0){
+r=r*n
+n-=1
+}
+for(i<-1 to n)
+r=r*i
+for (i<-1 to 3; from =4-i;j<- from to 3 ) print((10*i+j)+" ")
+
+for (i<-1 to 10) yield i % 3
+
+for (c<-"Hello"; i<-0 to 1) yield (c+1).toChar
+
+for ( i<-0 to 5; c<-"Hello") yield (c+i).toChar
+
+def abs(x:Double)=if(x>=0) x else -x
+abs(2)
+//Работает
+
+def sum(args: Int*)={
+var result=0
+for (arg<-args) result+=arg
+result
+}
+val s=sum(4,9,5)
+val s=sum(1 to 5:_*)
+lazy val words=scala.io.Source.fromFile("").mkString
+
+val nums=new Array[Int](10)
+
+val nu=new Array[String](10)
+
+val s=Array(" aaaa"," ", " ")
+s(0)="bbbb"
+import scala.collection.mutable.ArrayBuffer
+val num=ArrayBuffer[Int]() // num=new ArrayBuffer[Int]
+num+=8
+num+=(4,9,1,2)
+num.insert(3,99)
+
+for(i<-0 until num.length)
+println(i+":" +num(i))

@@ -1,0 +1,7 @@
+Masha 10
+Roma 8
+Dima 5
+Sonya 3
+Alina 2
+Sergey 9
+John 15

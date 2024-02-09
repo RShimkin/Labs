@@ -1,0 +1,7 @@
+val rdd=sc.textFile("C:\\Users\\malys\\Desktop\\OOV\\customer.csv")
+val rdd1 = rdd flatMap {_ split ","}
+val rdd2 = rdd1 map { (_, 1) }
+val rdd3 = rdd2 reduceByKey { _ + _ }
+val rdd4 = rdd3 map { _ swap } sortByKey { false } map { _ swap }
+val rdd4 = rdd3 map { _ swap } sortByKey { false } map { _ swap }
+rdd4.collect

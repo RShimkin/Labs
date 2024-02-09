@@ -1,0 +1,17 @@
+Danil,20
+Kirill,21
+Stas,20
+Michael,25
+Johnson,31
+Verberg,21
+Tronto,43
+Capula,19
+Jackson,28
+Queberg,30
+Capula,40
+Kirill,21
+Ursov,18
+Michael,29
+Intermat,34
+Johnson,52
+Creisberg,49

@@ -1,0 +1,40 @@
+I. RDD в DataFrame
+
+
+val personRDD = sc.textFile("C:\\Users\\malys\\Desktop\\ООВ\\Лаба 1\\people.txt")
+personRDD.collect
+personRDD.map{x => val per = x.split(",") ; (per(0),per(1).trim.toInt)}.toDF("name","age")
+res1.show
+
+
+II. DataFrame в RDD
+
+val df = spark.read.option("multiline", "true").json("C:\\Users\\malys\\Desktop\\ООВ\\Лаба 1\\people.json")
+val rdd1 = df.rdd
+rdd1.collect
+
+III. Преобразование RDD в DataSet
+
+val personRDD = sc.textFile("C:\\Users\\malys\\Desktop\\ООВ\\Лаба 1\\people.txt")
+case class Person(name:String,age:Long)
+personRDD.map{x => val per = x.split(",") ; Person(per(0),per(1).trim.toInt)}.toDS()
+res9.show
+
+//////DataSet в RDD
+
+case class Person(name:String,age:Long)
+val ds = Seq(Person("Andy",32)).toDS()
+val rdd2 = ds.rdd
+rdd2.collect
+
+IV. Преобразование DateFrame в DataSet
+
+val df = spark.read.option("multiline", "true").json("C:\\Users\\malys\\Desktop\\ООВ\\Лаба 1\\people.json")
+case class Person(name:String,age:Long)
+val ds = df.as[Person]
+ds.show
+
+///////DS=>DF
+
+val df2 = ds.toDF
+df2.show

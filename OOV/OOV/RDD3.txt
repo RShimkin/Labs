@@ -1,0 +1,30 @@
+val rdd1 = sc.textFile("C:\\Users\\malys\\Desktop\\ООВ\\RDDText.txt")
+val rdd2 = rdd1.flatMap(_.split(" "))
+val rdd3 = rdd2.map(w=>(w,1))
+val rdd4 = rdd3.reduceByKey(_+_)
+rdd4.collect()
+
+////Температура arr
+val rdd1 = sc.textFile("C:\\Users\\malys\\Desktop\\ООВ\\temps.txt")
+
+val rdd2 = rdd1.map(e=>{val arr = e.split(" ")
+(arr(0).toInt, (arr(1).toInt ,1))})
+
+import scala.math
+
+val rdd3 = rdd2.reduceByKey((a,b)=>{(a._1+b._1,a._2+b._2)})
+val rdd4 = rdd3.map(e=>{(e._1, e._2._1/(e._2._2.toFloat))})
+rdd4.collect
+rdd4.filter(_._1 == 2017).collect
+
+////Температура min max
+val rdd1 = sc.textFile("C:\\Users\\malys\\Desktop\\ООВ\\temps.txt")
+ .map(line=>{
+ val arr = line.split(" ")
+ (arr(0).toInt,(arr(1).toInt , arr(1).toInt))
+ })
+ .reduceByKey((a,b)=>{
+ import scala.math
+ (math.max(a._1 , b._1) , math.min(a._2 , b._2))
+ })
+ .collect()

@@ -1,0 +1,92 @@
+val KirillText = spark.sparkContext.textFile("C:\\Users\\malys\\Desktop\\OOV\\Laba\\data2labs.txt").map { x => val per = x.split(" "); (per(0).trim.toInt, per(1), per(2).trim.toInt, per(4), per(5), per(6).trim.toInt) }.toDF("class", "name", "age", "sex", "subject", "mark")
+  KirillText.printSchema()
+  KirillText.show(30)
+  //  1. Сколько человек сдало тест?
+  
+  KirillText.select("name").distinct().count()
+  //    1.1 Сколько человек в возрасте до 20 лет сдают тест?
+
+  KirillText.select("name").distinct().filter("age<20").count
+  //  1.2 Сколько человек, которым исполнилось 20 лет, сдают экзамен?
+  
+  KirillText.select("name").distinct().filter("age>=20").count
+  //  1.3 Сколько человек старше 20 лет сдают экзамен?
+  
+  KirillText.select("name").distinct().filter("age>20")
+  //  2. Всего несколько мальчиков сдают экзамен?
+  
+  KirillText.select("name").distinct().filter("sex=='man'").count()
+  //  2.1 Сколько девушек сдают экзамен?
+  
+  KirillText.select("name").distinct().filter("sex=='women'").count()
+  //    3. Сколько человек сдают экзамен в 12 классе?
+  
+  KirillText.select("name").distinct().filter("class==12").count()
+  //  3.1 Сколько человек в 13 классе сдают экзамен?
+  
+  KirillText.select("name").distinct().filter("class==13").count()
+  //  4. Каков средний балл по языковым предметам?
+  
+  KirillText.filter("subject<>'mathematics'").agg(avg("mark")).show()
+  //    4.1 Какова средняя оценка предметов по математике?
+  
+  KirillText.filter("subject=='mathematics'").agg(avg("mark")).show()
+  //    4.2 Какова средняя оценка предметов по английскому языку?
+  
+  KirillText.filter("subject=='еnglish'").agg(avg("mark")).show()
+  //  5. Каков средний балл одного человека?
+  
+  KirillText.filter("name=='Petrov'").agg(avg("mark")).show()
+  //  6. Каков средний балл 12 класса?
+  
+  KirillText.filter("class==12").agg(avg("mark")).show()
+  //  6.1 Какова средняя общая оценка для мальчиков в 12 классе?
+  
+  KirillText.filter("class==12").filter("sex=='man'").agg(avg("mark")).show()
+  //  6.2 Каков средний общий балл 12 девушек?
+  
+  KirillText.filter("class==12").filter("sex=='women'").agg(avg("mark")).show()
+  //  6.3 Точно так же ищите соответствующие результаты класса 13
+
+  KirillText.filter("class==13").agg(avg("mark")).show()
+  
+  KirillText.filter("class==13").filter("sex=='man'").agg(avg("mark")).show()
+  
+  KirillText.filter("class==13").filter("sex=='women'").agg(avg("mark")).show()
+  //  7. Какова самая высокая оценка китайского языка во всей школе?
+ 
+  KirillText.filter("subject=='сhinese'").groupBy().max("mark").show
+  //  7.1 Какой минимальный балл для 12 класса по китайскому языку?
+  
+  KirillText.filter("subject=='сhinese'").filter("class==12").groupBy().min("mark").show
+  //    7.2 Какой самый высокий класс математики в 13 классе?
+  
+  KirillText.filter("subject=='mathematics'").filter("class==13").groupBy().max("mark").show
+  //  8. Сколько девочек в 12 классах с общим баллом более 150?
+  
+  KirillText.filter("sex=='women'").filter("class==12").groupBy("name").agg(sum("mark") as "summark").filter("summark > 150").show
+  //    9. Каков средний балл учащегося с общим баллом, превышающим 150 баллов, по математике,
+  //  превышающей или равной 70, и возрастом, превышающим или равным 20 годам?
+  
+  val table1 = KirillText.filter("age<20").groupBy("name").agg(sum("mark") as "summark").filter("summark > 150")
+  val table2 = KirillText.filter("subject == 'mathematics'").filter("mark >=70")
+  //table1.show()
+  //table2.show()
+  table1.join(table2, table1("name") === table2("name")).show()
+
+
+
+////////////////////////////
+var aveg =table1.select("avg(mark)").rdd.map(r => r(0))
+ val a=aveg.collect
+a(0)
+
+val table = KirillText.filter("class==13").filter("sex=='man'").filter("age>20").filter("subject=='mathematics'").agg(avg("mark"))
+
+KirillText.join(table).show()
+dani
+ val table = KirillText.filter("class==13").filter("sex=='man'").filter("age>20").filter("subject=='mathematics'").agg(avg("mark") as "sredn")
+
+
+
+KirillText.join(table).filter("class==13").filter("subject=='mathematics'").filter("mark>sredn").show()

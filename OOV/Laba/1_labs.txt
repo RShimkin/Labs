@@ -1,0 +1,26 @@
+val counts=sc.textFile("C:\\Users\\malys\\Desktop\\ООВ\\Лаба 1\\Malyshev.txt")
+.flatMap(_.split("\\P{L}+"))
+.map((_,1))
+.reduceByKey(_+_)
+.collect
+.filter(((s)=>s._1=="kirill"&&s._2!=0))
+.map(t => (t._2, t._1))
+
+
+
+////////////////////////////////////
+if (counts.count>0) {
+println("Slovo " + counts(0)._2 + " vhodit "+counts(0)._1+" raz")
+}
+else {
+println("Slovo not found")
+}
+
+
+
+var counts = spark.sparkContext.textFile("C:\\Users\\malys\\Desktop\\ООВ\\Лаба 1\\Malyshev.txt")
+var counts1=counts.flatMap(_.split("\\P{L}+"))
+var counts2=counts1.map((_,1)) 
+var rdd1=counts2.reduceByKey(_+_) .collect
+var rdd2=rdd1.filter(((s)=>s._1=="danil")).map(t => (t._2, t._1))
+var result=if (rdd2.length>0) rdd2(0)._2 +" word enter "+rdd2(0)._1 else  "not word"
