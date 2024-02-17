@@ -1,0 +1,53 @@
+#version 330 core
+out vec4 FragColor;
+
+in vec3 Normal;
+in vec3 FragPos;
+in vec2 TexCoords;
+
+uniform sampler2D texture1;
+uniform vec3 lightPos;
+uniform vec3 lightPos1;
+uniform vec3 viewPos;
+uniform vec3 lightColor;
+uniform vec3 objectColor;
+
+void main()
+{
+
+	vec3 color = texture(texture1, TexCoords).rgb;
+	
+    // ‘онова€ составл€юща€
+    vec3 ambient = 0.05 * color;
+	
+    // ƒиффузна€ составл€юща€
+    vec3 lightDir = normalize(lightPos - FragPos);
+    vec3 normal = normalize(Normal);
+    float diff = max(dot(lightDir, normal), 0.0);
+    vec3 diffuse = diff * color;
+
+	// ќтраженна€ составл€юща€
+    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float spec = 0.0;
+
+    vec3 halfwayDir = normalize(lightDir + viewDir);  
+    spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+    
+    vec3 specular = vec3(0.3) * spec; // подразумеваем €ркий белый свет
+
+    vec3 lightDir1 = normalize(lightPos1 - FragPos);
+    float diff1 = max(dot(lightDir1, normal), 0.0);
+    vec3 diffuse1 = diff1 * color;
+
+	// ќтраженна€ составл€юща€
+    vec3 reflectDir1 = reflect(-lightDir1, normal);
+
+    float spec1 = 0.0;
+    vec3 halfwayDir1 = normalize(lightDir1 + viewDir);  
+    spec1 = pow(max(dot(normal, halfwayDir1), 0.0), 32.0);
+    vec3 specular1 = vec3(0.3) * spec1; // подразумеваем €ркий белый свет
+
+    FragColor = vec4(ambient + diffuse + diffuse1  + specular + specular1, 1.0);
+
+}

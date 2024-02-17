@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-3 mb-2 cont pt-2">
+    <h1>{{ title }}</h1>
+
+    <form action="{% url 'access' %}" method="post">
+        {% csrf_token %}
+        {{ signup_form.as_p }}
+        <button type="submit" class="mb-4 btn btn-success">Зарегистрироваться</button>
+    </form>
+    <form action="{% url 'access' %}" method="post">
+        {% csrf_token %}
+        {{ signin_form.as_p }}
+        <button type="submit" class="mb-4 btn btn-success">Войти</button>
+    </form>
+</div>
+
+{% endblock content %}

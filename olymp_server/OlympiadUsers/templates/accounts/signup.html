@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .centerBlock {
+        width: 50%;
+        margin: 0 auto 0;
+    }
+</style>
+
+<div class="container mt-3 mb-2 cont pt-2 centerBlock">
+    <h2>Регистрация</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="mb-4 btn btn-success">Зарегистрироваться</button>
+    </form>
+</div>
+
+{% endblock content %}
